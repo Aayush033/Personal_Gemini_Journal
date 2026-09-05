@@ -13,7 +13,7 @@
 
 ## 🚀 Live Cloud Run Deployment
 
-- **Production Application URL**: `[YOUR_DEPLOYED_CLOUD_RUN_URL_HERE]`
+- **Production Application URL**: [personal-gemini-journal-389529110235.us-central1.run.app](https://personal-gemini-journal-389529110235.us-central1.run.app/)
 - **Google Cloud Project**: `gcp-ideathon` (GCP Ideathon)
 - **Cloud Run Service Name**: `personal-gemini-journal`
 - **Target Region**: `us-central1`
