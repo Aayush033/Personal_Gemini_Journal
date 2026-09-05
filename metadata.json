@@ -1,0 +1,6 @@
+{
+  "name": "Personal Gemini Journal",
+  "description": "A secure, enterprise-grade personal journal and brainstorming co-pilot powered by Gemini and Firebase with strict user isolation, multi-turn AI interactions, and zero-knowledge privacy.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

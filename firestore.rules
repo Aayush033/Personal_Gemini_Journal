@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Personal Gemini Journal: Strict Multi-Tenant User Isolation Rules
+    // Enforces zero cross-user leakage. Users have isolated sandboxes under their UID.
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      match /{allSubcollections=**} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Default deny-all for any unmapped paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

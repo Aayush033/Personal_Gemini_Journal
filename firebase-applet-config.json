@@ -1,0 +1,12 @@
+{
+  "projectId": "gcp-ideathon",
+  "appId": "1:389529110235:web:52ebaa825a951d8fe86efe",
+  "apiKey": "AIzaSyB3FkBlirk6Kc1-9I40pnPYkHn9_3ARAao",
+  "authDomain": "gcp-ideathon.firebaseapp.com",
+  "firestoreDatabaseId": "ai-studio-b99da1e2-eb5b-4adf-b2f3-54cfb0d39cf6",
+  "storageBucket": "gcp-ideathon.firebasestorage.app",
+  "messagingSenderId": "389529110235",
+  "measurementId": "",
+  "oAuthClientId": "389529110235-kseulcj6r3sahibnk848rdk1drdpfe76.apps.googleusercontent.com",
+  "recaptchaSiteKey": ""
+}

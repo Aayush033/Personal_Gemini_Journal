@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "JournalEntry": {
+      "title": "JournalEntry",
+      "description": "User journal reflection with optional Zero-Knowledge AES-GCM-256 encrypted payload and AI-generated synthesis.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique entry identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner Firebase user UID"
+        },
+        "title": {
+          "type": "string",
+          "description": "Session title"
+        },
+        "createdAt": {
+          "type": "number",
+          "description": "Creation timestamp in epoch milliseconds"
+        },
+        "updatedAt": {
+          "type": "number",
+          "description": "Last modified timestamp in epoch milliseconds"
+        },
+        "rawConversation": {
+          "type": "array",
+          "description": "Array of conversation turns between user and Gemini model"
+        },
+        "summary": {
+          "type": "object",
+          "description": "Structured executive digest, action items, tags, and reflection prompts"
+        },
+        "tags": {
+          "type": "array",
+          "description": "Semantic categorization tags"
+        },
+        "isEncrypted": {
+          "type": "boolean",
+          "description": "Whether raw reflection content is encrypted with client-side AES-GCM-256"
+        },
+        "cipherData": {
+          "type": "object",
+          "description": "Cryptographic payload containing ciphertext, IV, and PBKDF2 salt"
+        },
+        "pinned": {
+          "type": "boolean",
+          "description": "Whether entry is pinned to the top of the journal list"
+        },
+        "favorite": {
+          "type": "boolean",
+          "description": "Whether entry is starred as a favorite"
+        },
+        "personaId": {
+          "type": "string",
+          "description": "AI co-pilot persona utilized for the session"
+        },
+        "wordCount": {
+          "type": "number",
+          "description": "Total word count across session reflections"
+        }
+      },
+      "required": ["id", "userId", "title", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/entries/{entryId}": {
+      "schema": "JournalEntry",
+      "description": "Strictly isolated user-scoped journal reflections enforcing zero cross-user access"
+    }
+  }
+}

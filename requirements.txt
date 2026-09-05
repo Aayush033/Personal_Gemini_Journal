@@ -1,0 +1,25 @@
+# Python Virtualenv (venv) Requirements
+# Personal Gemini Journal (Enterprise-Grade Edition)
+#
+# Use these requirements to sandbox your development environment in VS Code
+# without installing global packages onto your operating system.
+#
+# Quickstart in VS Code:
+#   1. python3 -m venv venv
+#   2. source venv/bin/activate       (On Windows: venv\Scripts\activate)
+#   3. pip install -r requirements.txt
+#   4. nodeenv -p                     (Integrates Node.js & npm directly inside this venv)
+#   5. npm install                    (Installs all project dependencies inside the venv)
+#   6. npm run dev                    (Starts the app on http://localhost:3000)
+
+# Sandboxes Node.js & npm inside the active Python virtualenv
+nodeenv>=1.9.0
+
+# Environment variables & secret handling (.env)
+python-dotenv>=1.0.0
+
+# HTTP client for local server testing and automated health check queries
+requests>=2.31.0
+
+# Automated Python test runner for local verification
+pytest>=8.0.0
