@@ -21,11 +21,11 @@
 
 ---
 
-## 🏆 Quick Guide for Hackathon Judges
+## 🏛️ System Architecture & Implementation Highlights
 
-To evaluate and grade this repository quickly, here are the key locations and commands:
+Overview of core capabilities, security controls, and key implementation locations:
 
-| Scoring Criteria | What Was Built | File / Implementation Location |
+| Core Capability | Technical Implementation | Architecture Reference |
 | :--- | :--- | :--- |
 | **Zero-Knowledge Privacy** | Client-side AES-GCM-256 + PBKDF2 (100k iter) encryption before cloud sync. | [`src/lib/crypto.ts`](./src/lib/crypto.ts), [`src/components/CryptoModal.tsx`](./src/components/CryptoModal.tsx) |
 | **Multi-Tenant Isolation** | Strict Firestore kernel rules enforcing `request.auth.uid == userId`. | [`firestore.rules`](./firestore.rules), [`src/lib/firestoreService.ts`](./src/lib/firestoreService.ts) |
@@ -41,52 +41,23 @@ To evaluate and grade this repository quickly, here are the key locations and co
 
 ---
 
-## ☁️ Google Cloud Run Deployment Guide
+## 🚀 Production Deployment (Google Cloud Run)
 
-Follow these steps to deploy the application directly to Google Cloud Run under the **GCP Ideathon** project (`gcp-ideathon`):
+The application is containerized and deployed to Google Cloud Run with Google Cloud Secret Manager integration:
 
-### 1. Authenticate & Configure GCP Project
 ```bash
-# Log in to your Google Cloud account
-gcloud auth login
-
-# Set your active project to GCP Ideathon
+# 1. Set active GCP project & enable required services
 gcloud config set project gcp-ideathon
+gcloud services enable run.googleapis.com secretmanager.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com
 
-# Enable required Google Cloud services
-gcloud services enable \
-  run.googleapis.com \
-  secretmanager.googleapis.com \
-  cloudbuild.googleapis.com \
-  artifactregistry.googleapis.com
-```
-
-### 2. Store Gemini API Key in Google Cloud Secret Manager
-```bash
-# Create the secret securely without putting it in bash history
-echo -n "YOUR_GEMINI_API_KEY" | gcloud secrets create GEMINI_API_KEY --data-file=-
-
-# Grant Cloud Run runtime service account permission to access the secret
+# 2. Store Gemini API key in Secret Manager & grant Cloud Run runtime access
+echo -n "$GEMINI_API_KEY" | gcloud secrets create GEMINI_API_KEY --data-file=-
 PROJECT_NUMBER=$(gcloud projects describe gcp-ideathon --format="value(projectNumber)")
 gcloud secrets add-iam-policy-binding GEMINI_API_KEY \
   --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
   --role="roles/secretmanager.secretAccessor"
-```
 
-### 3. Deploy Firestore Security Rules
-```bash
-# If Firebase CLI is installed:
-firebase use gcp-ideathon
-firebase deploy --only firestore:rules
-
-# Alternatively, copy the rules from firestore.rules directly into:
-# Firebase Console -> Build -> Firestore Database -> Rules tab -> Publish
-```
-
-### 4. Deploy to Google Cloud Run (With Mandatory Verification Label)
-Run the following build and deploy command. The `--update-labels=dev-tutorial=cloud-run-ai-challenge` flag is required for hackathon validation:
-
-```bash
+# 3. Deploy containerized service with hackathon challenge verification label
 gcloud run deploy personal-gemini-journal \
   --source . \
   --platform managed \
@@ -95,8 +66,6 @@ gcloud run deploy personal-gemini-journal \
   --set-secrets="GEMINI_API_KEY=GEMINI_API_KEY:latest" \
   --update-labels=dev-tutorial=cloud-run-ai-challenge
 ```
-
-Once the deployment finishes, Cloud Run outputs your Service URL (e.g., `https://personal-gemini-journal-xxxxxxxxxx-uc.a.run.app`). Copy this URL and paste it into the `[YOUR_DEPLOYED_CLOUD_RUN_URL_HERE]` placeholder above!
 
 ---
 
